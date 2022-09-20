@@ -1,0 +1,64 @@
+import csv
+import re   
+  
+ 
+  
+regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'  
+  
+def check(email):   
+  
+    if(re.search(regex,email)):   
+        print("Valid Email")   
+    else:   
+        print("Invalid Email")   
+      
+if __name__ == '__main__' :   
+      
+    email = input("enter email:  ")
+    check(email)
+  
+   
+
+def register():
+  with open("users.csv",mode="a",newline="") as f:
+    writer= csv.writer(f,delimiter=",")
+    global email 
+    email1=email
+
+    
+    password=input("enter password: ")
+    if len(password) < 6:
+        print("Make sure your password is at lest 6 letters")
+    elif re.search('[0-9]',password) is None:
+        print("Make sure your password has a number in it")
+    elif re.search('[A-Z]',password) is None: 
+        print("Make sure your password has a capital letter in it")
+     
+    elif re.search('[!,@,#,$,%,^,&,*]',password) is None :
+        print("Make sure your password has a special character")
+    
+    else:
+        print("Register sucess")
+        writer.writerow([email,password])
+    
+        
+
+  
+
+def login():
+  email=input("please enter email: ")
+  password=input(" enter password: ")
+  with open ("users.csv",mode="r")as f:
+    reader =csv.reader(f,delimiter=",")
+    for row in reader:
+      if row==[email,password]:
+        print("you are logged in")
+        return True
+  print("please try again!")
+  return False
+
+  
+    
+    
+register()
+login()
